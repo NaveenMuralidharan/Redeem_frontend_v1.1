@@ -165,7 +165,7 @@ export default function CreditorDebtCreate() {
               <label htmlFor="paymentDeadline" className="block text-primary font-bold mb-2">
                 Repayment Deadline:
               </label>
-                <p>Redeem will round off debtor's transactions every week and deposit it in your account. If they are still short of repayment by the deadline, Redeem will prompt them to make up the difference or 
+                <p>Redeem will round off debtor's transactions every 2 weeks and deposit it in your account. If they are still short of repayment by the deadline, Redeem will prompt them to make up the difference or 
                     re-negotiate terms.
                 </p>
               <input
@@ -248,12 +248,24 @@ export default function CreditorDebtCreate() {
             {isSubmitted ? (
               <>
                 <p className="text-green-600 font-bold">
-                  Your debt was successfully created.</p>
+                  Your debt was successfully created.
+                </p>
+                <div>
+                <b>Next Steps:</b>
+                  <ol>
+                    <li>
+                       1. Share the link below with your debtor.
+                    </li>
+                    <li>
+                      2. Your debtor will accept the debt and follow the simple steps to complete onboarding.
+                    </li>
+                    <li>
+                      3. They'll link their bank account and start making payments.           
+                    </li>
+                  </ol>
+                </div>
                 <p>
-                  Save the link below and send it to the debtor to accept the debt and follow instructions to be onboarded to the Redeem platform and link their bank account to start making payments. Details about repayment terms and conditions will be displayed to the debtor.
-                </p>  
-                <p>
-                  Debt Link: <a href={debtLink} className="text-blue-500 underline">{debtLink}</a>
+                  <b>Debt Link:</b> <a href={debtLink} className="text-blue-500 underline">{debtLink}</a>
                 </p>
                 <button
                   type="button"

@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 
-export default function DebtorDebtsDashboard(params) {
+export default function DebtorDebtsDashboard() {
     const router = useRouter();
-    const debtId = params?.debtId; // Extract debt ID from URL
+    const params = useParams(); // Correctly get params from Next.js
+    const debtId = params?.id; // Extract debt ID from URL
     const [debtData, setDebtData] = useState(null); // State to store debt details
     const [loading, setLoading] = useState(true);  
   // Mocked API fetch to simulate getting debt details
@@ -17,8 +18,8 @@ export default function DebtorDebtsDashboard(params) {
         // const response = await fetch(`/api/debts/${debtId}`); // Replace with actual API route
         // const data = await response.json();
         // Mocked Debt Object for Simulation (Used in Development Phase):
-        console.log(debtId)
-        const mockDebtData = {
+
+        const mockDebtData = [{
             id: '1234',
             customerID: 'CUST001',
             customerFirstName: 'John',
@@ -35,9 +36,29 @@ export default function DebtorDebtsDashboard(params) {
             updatedStatus: 'Paid',
             estimatedMonthly: 35,
             linkedAccount: 'Bank of USA - Checking'
-        };
-        setDebtData(mockDebtData);
+        },
+        {
+            id: '5678',
+            customerID: 'CUST002',
+            customerFirstName: 'Jane',
+            customerLastName: 'Smith',
+            customerEmail: 'janesmith@example.com',
+            debtAmount: 300,
+            paidAmount: 100,
+            status: 'Partially settled',
+            debtOrigin: 'Second Credit Bank',
+            debtStatement: null,
+            paymentDeadline: '2024-12-31',
+            reportedToCredit: false,
+            reportedStatus: null,
+            updatedStatus: 'Settled',
+            estimatedMonthly: 20,
+            linkedAccount: 'Bank of USA - Savings',
+          },];
 
+        const debtData = mockDebtData.find((debt) => debt.id == debtId);
+
+        setDebtData(debtData);
 
       } catch (error) {
         console.error('Error fetching debt details:', error);
@@ -56,6 +77,11 @@ export default function DebtorDebtsDashboard(params) {
   if (!debtData) {
     return <p>Debt details not found.</p>;
   }
+
+  const handleViewTransactions = () => {
+    router.push(`/debtor/transactions/${debtId}`);
+  };
+
 
     return (
         <>
@@ -93,14 +119,15 @@ export default function DebtorDebtsDashboard(params) {
                         <b>Status:</b> {debtData.status}
                     </li>
                     <li>
-                    <b>Progress:</b> {(debtData.paidAmount / debtData.debtAmount)*100}% Paid
+                    <b>Progress:</b> {((debtData.paidAmount / debtData.debtAmount)*100).toFixed(1)}% Paid
 
                     {(debtData.paidAmount / debtData.debtAmount)*100 < 1 ? (<></>): (<>
-                        <div className="progress-bar">
-                        <div style={{ width: `${(debtData.paidAmount / debtData.debtAmount)*100}%` }}
-                        className="bg-red-500 h-5 rounded"
-                        ></div>
-                    </div>
+                        
+                        <div className="progress-bar w-full bg-gray-300 h-5 rounded relative border border-gray-400">
+                            <div style={{ width: `${((debtData.paidAmount / debtData.debtAmount)).toFixed(1)*100}%` }}
+                            className="bg-red-500 h-5 rounded-l" >
+                            </div>
+                        </div>
                     
                     </>)}
 
@@ -138,9 +165,13 @@ export default function DebtorDebtsDashboard(params) {
                 </div>
 
             </div>
+
+            <button onClick={handleViewTransactions} className="px-4 py-2 bg-green-accent text-white rounded-lg shadow hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-light focus:ring-offset-2 transition duration-200">
+            View Transactions
+        </button>
+
         </div>
 
-        
         
         </section>
                 
