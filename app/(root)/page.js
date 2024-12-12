@@ -11,7 +11,7 @@ export default function Home() {
         Say goodbye to costly collection processes and hello to improved repayment rates.
            </p>
       <a
-        href="#contact"
+        href="/creditor/signup"
         className="bg-[#FF6F61] text-[#FFFBEB] py-3 px-6 text-xl font-semibold shadow-[4px_4px_0_0_#333333] hover:shadow-[6px_6px_0_0_#333333] transition-all duration-150"
       >
         Get Started
